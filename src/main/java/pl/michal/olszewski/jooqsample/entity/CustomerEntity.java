@@ -6,10 +6,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @Table(name = "CUSTOMER")
+@Builder
 public class CustomerEntity {
 
   @Id
@@ -27,7 +28,8 @@ public class CustomerEntity {
   private String email;
 
   @OneToMany(mappedBy = "customerEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<ProductEntity> productList=new HashSet<>();
+  @Builder.Default
+  private Set<ProductEntity> productList = new HashSet<>();
 
   public void addProduct(ProductEntity item) {
     productList.add(item);

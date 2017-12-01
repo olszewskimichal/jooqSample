@@ -2,9 +2,9 @@ package pl.michal.olszewski.jooqsample.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.michal.olszewski.jooqsample.entity.ProductEntity;
+import pl.michal.olszewski.jooqsample.entity.CustomerEntity;
 
 @Repository
-public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
+public interface CustomerRepository extends JpaRepository<CustomerEntity, Long> {
 
 }
