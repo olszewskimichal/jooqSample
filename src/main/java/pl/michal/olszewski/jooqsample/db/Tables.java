@@ -6,6 +6,8 @@ package pl.michal.olszewski.jooqsample.db;
 
 import javax.annotation.Generated;
 
+import pl.michal.olszewski.jooqsample.db.tables.Customer;
+import pl.michal.olszewski.jooqsample.db.tables.Product;
 import pl.michal.olszewski.jooqsample.db.tables.Reservation;
 
 
@@ -21,6 +23,16 @@ import pl.michal.olszewski.jooqsample.db.tables.Reservation;
 )
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * The table <code>PUBLIC.CUSTOMER</code>.
+     */
+    public static final Customer CUSTOMER = pl.michal.olszewski.jooqsample.db.tables.Customer.CUSTOMER;
+
+    /**
+     * The table <code>PUBLIC.PRODUCT</code>.
+     */
+    public static final Product PRODUCT = pl.michal.olszewski.jooqsample.db.tables.Product.PRODUCT;
 
     /**
      * The table <code>PUBLIC.RESERVATION</code>.

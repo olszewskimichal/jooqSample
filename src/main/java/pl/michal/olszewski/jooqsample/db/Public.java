@@ -15,6 +15,8 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
+import pl.michal.olszewski.jooqsample.db.tables.Customer;
+import pl.michal.olszewski.jooqsample.db.tables.Product;
 import pl.michal.olszewski.jooqsample.db.tables.Reservation;
 
 
@@ -31,12 +33,22 @@ import pl.michal.olszewski.jooqsample.db.tables.Reservation;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = 800253565;
+    private static final long serialVersionUID = -657620170;
 
     /**
      * The reference instance of <code>PUBLIC</code>
      */
     public static final Public PUBLIC = new Public();
+
+    /**
+     * The table <code>PUBLIC.CUSTOMER</code>.
+     */
+    public final Customer CUSTOMER = pl.michal.olszewski.jooqsample.db.tables.Customer.CUSTOMER;
+
+    /**
+     * The table <code>PUBLIC.PRODUCT</code>.
+     */
+    public final Product PRODUCT = pl.michal.olszewski.jooqsample.db.tables.Product.PRODUCT;
 
     /**
      * The table <code>PUBLIC.RESERVATION</code>.
@@ -68,7 +80,9 @@ public class Public extends SchemaImpl {
 
     private final List<Sequence<?>> getSequences0() {
         return Arrays.<Sequence<?>>asList(
-            Sequences.SYSTEM_SEQUENCE_494F13E3_5228_4508_A01F_A7CEEA206135);
+            Sequences.SYSTEM_SEQUENCE_25386F2D_462E_42A0_8A11_14423346C0EA,
+            Sequences.SYSTEM_SEQUENCE_494F13E3_5228_4508_A01F_A7CEEA206135,
+            Sequences.SYSTEM_SEQUENCE_995D1763_CBC6_4F8E_A3DD_46B801F6589B);
     }
 
     @Override
@@ -80,6 +94,8 @@ public class Public extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
+            Customer.CUSTOMER,
+            Product.PRODUCT,
             Reservation.RESERVATION);
     }
 }

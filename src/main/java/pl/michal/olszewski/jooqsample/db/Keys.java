@@ -6,11 +6,16 @@ package pl.michal.olszewski.jooqsample.db;
 
 import javax.annotation.Generated;
 
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
 
+import pl.michal.olszewski.jooqsample.db.tables.Customer;
+import pl.michal.olszewski.jooqsample.db.tables.Product;
 import pl.michal.olszewski.jooqsample.db.tables.Reservation;
+import pl.michal.olszewski.jooqsample.db.tables.records.CustomerRecord;
+import pl.michal.olszewski.jooqsample.db.tables.records.ProductRecord;
 import pl.michal.olszewski.jooqsample.db.tables.records.ReservationRecord;
 
 
@@ -32,28 +37,41 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
+    public static final Identity<CustomerRecord, Long> IDENTITY_CUSTOMER = Identities0.IDENTITY_CUSTOMER;
+    public static final Identity<ProductRecord, Long> IDENTITY_PRODUCT = Identities0.IDENTITY_PRODUCT;
     public static final Identity<ReservationRecord, Long> IDENTITY_RESERVATION = Identities0.IDENTITY_RESERVATION;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<CustomerRecord> CONSTRAINT_5 = UniqueKeys0.CONSTRAINT_5;
+    public static final UniqueKey<ProductRecord> CONSTRAINT_1 = UniqueKeys0.CONSTRAINT_1;
     public static final UniqueKey<ReservationRecord> CONSTRAINT_2 = UniqueKeys0.CONSTRAINT_2;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final ForeignKey<ProductRecord, CustomerRecord> FKJ80N6400WNFQRT86QIMF9K6YS = ForeignKeys0.FKJ80N6400WNFQRT86QIMF9K6YS;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
 
     private static class Identities0 extends AbstractKeys {
+        public static Identity<CustomerRecord, Long> IDENTITY_CUSTOMER = createIdentity(Customer.CUSTOMER, Customer.CUSTOMER.ID);
+        public static Identity<ProductRecord, Long> IDENTITY_PRODUCT = createIdentity(Product.PRODUCT, Product.PRODUCT.ID);
         public static Identity<ReservationRecord, Long> IDENTITY_RESERVATION = createIdentity(Reservation.RESERVATION, Reservation.RESERVATION.ID);
     }
 
     private static class UniqueKeys0 extends AbstractKeys {
+        public static final UniqueKey<CustomerRecord> CONSTRAINT_5 = createUniqueKey(Customer.CUSTOMER, "CONSTRAINT_5", Customer.CUSTOMER.ID);
+        public static final UniqueKey<ProductRecord> CONSTRAINT_1 = createUniqueKey(Product.PRODUCT, "CONSTRAINT_1", Product.PRODUCT.ID);
         public static final UniqueKey<ReservationRecord> CONSTRAINT_2 = createUniqueKey(Reservation.RESERVATION, "CONSTRAINT_2", Reservation.RESERVATION.ID);
+    }
+
+    private static class ForeignKeys0 extends AbstractKeys {
+        public static final ForeignKey<ProductRecord, CustomerRecord> FKJ80N6400WNFQRT86QIMF9K6YS = createForeignKey(pl.michal.olszewski.jooqsample.db.Keys.CONSTRAINT_5, Product.PRODUCT, "FKJ80N6400WNFQRT86QIMF9K6YS", Product.PRODUCT.CUSTOMER_ID);
     }
 }

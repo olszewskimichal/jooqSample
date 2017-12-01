@@ -27,7 +27,6 @@ public class CustomerEntity {
   private String email;
 
   @OneToMany(mappedBy = "customerEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "product_id")
   private Set<ProductEntity> productList=new HashSet<>();
 
   public void addProduct(ProductEntity item) {
