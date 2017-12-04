@@ -1,14 +1,15 @@
 package pl.michal.olszewski.jooqsample.dao;
 
 import java.io.Serializable;
+import java.util.stream.Stream;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface Dao<T, ID extends Serializable> {
 
-  <S extends T> S save(S entity);
+  T save(T entity);
 
-  <S extends T> Iterable<S> save(Iterable<S> entities);
+  Stream<T> save(Stream<T> entities);
 
   void delete(ID id);
 

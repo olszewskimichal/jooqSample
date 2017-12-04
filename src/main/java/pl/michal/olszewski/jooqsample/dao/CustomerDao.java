@@ -3,6 +3,7 @@ package pl.michal.olszewski.jooqsample.dao;
 import static pl.michal.olszewski.jooqsample.db.tables.Customer.CUSTOMER;
 import static pl.michal.olszewski.jooqsample.db.tables.Product.PRODUCT;
 
+import java.util.stream.Stream;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import pl.michal.olszewski.jooqsample.config.DateTimeService;
@@ -33,11 +34,11 @@ public class CustomerDao implements Dao<CustomerEntity, Long> {
     return customerEntity;
   }
 
-
   @Override
-  public <S extends CustomerEntity> Iterable<S> save(Iterable<S> entities) {
-    return null;
+  public Stream<CustomerEntity> save(Stream<CustomerEntity> entities) {
+    return entities;
   }
+
 
   @Override
   public void delete(Long aLong) {

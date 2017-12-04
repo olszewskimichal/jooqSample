@@ -2,6 +2,9 @@ package pl.michal.olszewski.jooqsample.dao;
 
 import static pl.michal.olszewski.jooqsample.db.tables.Reservation.RESERVATION;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 import pl.michal.olszewski.jooqsample.config.DateTimeService;
@@ -21,17 +24,17 @@ public class ReservationDao implements Dao<ReservationEntity, Long> {
   }
 
   public ReservationEntity save(ReservationEntity reservation) {
-    ReservationRecord reservationRecord = dslContext.insertInto(RESERVATION, RESERVATION.NAME, RESERVATION.DESCRIPTION)
-        .values(reservation.getName(), reservation.getDescription())
-        .returning(RESERVATION.ID)
-        .fetchOne();
-    reservation.setId(reservationRecord.getId());
-    return reservation;
+    ReservationRecord reservationRecord = dslContext.insertInto(RESERVATION)
+        .set(createRecord(reservation))
+        .returning().fetchOne();
+    return convertQueryResultToModelObject(reservationRecord);
   }
 
   @Override
-  public <S extends ReservationEntity> Iterable<S> save(Iterable<S> entities) {
-    return null;
+  public Stream<ReservationEntity> save(Stream<ReservationEntity> entities) {
+    List<ReservationRecord> collect = entities.map(this::createRecord).collect(Collectors.toList());
+    dslContext.batchInsert(collect).execute();
+    return entities;
   }
 
   @Override
@@ -52,6 +55,10 @@ public class ReservationDao implements Dao<ReservationEntity, Long> {
   @Override
   public ReservationEntity update(ReservationEntity entity) {
     return null;
+  }
+
+  private ReservationRecord createRecord(ReservationEntity entity) {
+    return new ReservationRecord(entity.getId(), entity.getDescription(), entity.getName());
   }
 
   private ReservationEntity convertQueryResultToModelObject(ReservationRecord queryResult) {
