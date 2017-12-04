@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CustomerDTO {
   private Long id;
-  private Long email;
+  private String email;
   private Set<ProductDTO> products = new HashSet<>();
 }
