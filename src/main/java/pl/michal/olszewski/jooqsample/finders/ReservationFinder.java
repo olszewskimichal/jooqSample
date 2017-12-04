@@ -28,7 +28,6 @@ public class ReservationFinder implements Finder<ReservationDTO, Long> {
     return record.map(this::convertQueryResultToModelObject);
   }
 
-  @Override
   public List<ReservationDTO> findAll() {
     return dslContext.selectFrom(RESERVATION)
         .fetchInto(ReservationRecord.class)
@@ -37,26 +36,19 @@ public class ReservationFinder implements Finder<ReservationDTO, Long> {
         .collect(Collectors.toList());
   }
 
-  @Override
   public Optional<ReservationDTO> getById(Long id) {
-    ReservationRecord record = dslContext.selectFrom(RESERVATION)
+    Optional<ReservationRecord> record = dslContext.selectFrom(RESERVATION)
         .where(RESERVATION.ID.equal(id))
-        .fetchOne();
-    if (record == null) {
-      return Optional.empty();
-    }
-    return Optional.ofNullable(convertQueryResultToModelObject(record));
+        .fetchOptional();
+    return record.map(this::convertQueryResultToModelObject);
   }
 
-  @Override
   public boolean exists(Long id) {
-    return dslContext.fetchExists(
-        dslContext.selectOne()
-            .from(RESERVATION)
-            .where(RESERVATION.ID.equal(id)));
+    return dslContext.selectOne()
+        .from(RESERVATION)
+        .where(RESERVATION.ID.equal(id)).fetchOptional().isPresent();
   }
 
-  @Override
   public long count() {
     return dslContext.selectCount().from(RESERVATION).fetchOne(0, int.class);
   }
