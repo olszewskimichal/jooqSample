@@ -130,10 +130,10 @@ public class ReservationFinderTest {
       id = entityRepository.save(ReservationEntity.builder().name("name" + i).description("desc").build()).getId();
     }
 
-    List<ReservationDTO> all = reservationFinder.findAll(new SeekPagable(10, null));
+    List<ReservationDTO> all = reservationFinder.findAll(new SeekPageable(10, null));
     assertThat(all).isNotEmpty().hasSize(10);
 
-    List<ReservationDTO> anotherAll = reservationFinder.findAll(new SeekPagable(10, id - 10));
+    List<ReservationDTO> anotherAll = reservationFinder.findAll(new SeekPageable(10, id - 10));
     assertThat(anotherAll).isNotEmpty().hasSize(10);
 
     assertThat(all).isNotEqualTo(anotherAll);

@@ -7,7 +7,7 @@ import lombok.Value;
 @Data
 @Value
 @AllArgsConstructor
-public class SeekPagable {
+public class SeekPageable {
 
   private final int pageSize;
   private final Long lastId;

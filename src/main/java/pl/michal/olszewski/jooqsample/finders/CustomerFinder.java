@@ -82,7 +82,7 @@ public class CustomerFinder implements Finder<CustomerDTO, Long> {
   }
 
   @Override
-  public List<CustomerDTO> findAll(SeekPagable pageable) {
+  public List<CustomerDTO> findAll(SeekPageable pageable) {
     return dslContext.select().from(CUSTOMER)
         .leftJoin(PRODUCT)
         .on(CUSTOMER.ID.eq(PRODUCT.CUSTOMER_ID))

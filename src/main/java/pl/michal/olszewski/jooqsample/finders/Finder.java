@@ -14,6 +14,6 @@ public interface Finder<T, ID extends Serializable> {
 
   long count();
 
-  List<T> findAll(SeekPagable pageable);
+  List<T> findAll(SeekPageable pageable);
 
 }

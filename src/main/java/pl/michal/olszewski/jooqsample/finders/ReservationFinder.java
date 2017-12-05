@@ -54,7 +54,7 @@ public class ReservationFinder implements Finder<ReservationDTO, Long> {
   }
 
   @Override
-  public List<ReservationDTO> findAll(SeekPagable pageable) {
+  public List<ReservationDTO> findAll(SeekPageable pageable) {
     List<ReservationRecord> fetch = dslContext.selectFrom(RESERVATION)
         .orderBy(RESERVATION.ID.asc())
         .seek(pageable.getLastId() != null ? pageable.getLastId() : 0L)
