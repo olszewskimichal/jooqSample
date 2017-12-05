@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @Profile("application")
 @Component
 public class CurrentTimeDateTimeService implements DateTimeService {
- 
-    @Override
-    public LocalDateTime getCurrentDateTime() {
-        return LocalDateTime.now();
-    }
- 
-    @Override
-    public Instant getCurrentTimestamp() {
-        return Instant.now();
-    }
+
+  @Override
+  public LocalDateTime getCurrentDateTime() {
+    return LocalDateTime.now();
+  }
+
+  @Override
+  public Instant getCurrentTimestamp() {
+    return Instant.now();
+  }
 }

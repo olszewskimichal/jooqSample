@@ -38,23 +38,34 @@ public class ReservationDao implements Dao<ReservationEntity, Long> {
   }
 
   @Override
-  public void delete(Long aLong) {
-
+  public void delete(Long id) {
+    dslContext.delete(RESERVATION)
+        .where(RESERVATION.ID.equal(id))
+        .execute();
   }
 
   @Override
   public void delete(ReservationEntity entity) {
-
+    dslContext.delete(RESERVATION)
+        .where(RESERVATION.ID.equal(entity.getId()))
+        .execute();
   }
 
   @Override
   public void deleteAll() {
-
+    dslContext.delete(RESERVATION)
+        .execute();
   }
 
   @Override
   public ReservationEntity update(ReservationEntity entity) {
-    return null;
+    dslContext.update(RESERVATION)
+        .set(RESERVATION.NAME, entity.getName())
+        .set(RESERVATION.DESCRIPTION, entity.getDescription())
+        .where(RESERVATION.ID.equal(entity.getId()))
+        .execute();
+
+    return entity;
   }
 
   private ReservationRecord createRecord(ReservationEntity entity) {

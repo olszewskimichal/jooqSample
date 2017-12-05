@@ -53,6 +53,16 @@ public class ReservationFinder implements Finder<ReservationDTO, Long> {
     return dslContext.selectCount().from(RESERVATION).fetchOne(0, int.class);
   }
 
+  @Override
+  public List<ReservationDTO> findAll(SeekPagable pageable) {
+    List<ReservationRecord> fetch = dslContext.selectFrom(RESERVATION)
+        .orderBy(RESERVATION.ID.asc())
+        .seek(pageable.getLastId() != null ? pageable.getLastId() : 0L)
+        .limit(pageable.getPageSize())
+        .fetchInto(ReservationRecord.class);
+    return fetch.stream().map(this::convertQueryResultToModelObject).collect(Collectors.toList());
+  }
+
   private ReservationDTO convertQueryResultToModelObject(ReservationRecord queryResult) {
     return ReservationDTO.builder()
         .name(queryResult.getName())

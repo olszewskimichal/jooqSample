@@ -3,6 +3,7 @@ package pl.michal.olszewski.jooqsample.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.runner.JUnitPlatform;
@@ -39,5 +40,54 @@ public class ReservationDaoTest {
     assertThat(test).isPresent();
     assertThat(test.get().getDescription()).isEqualTo("description");
   }
+
+  @Test
+  void shouldSaveStreamOfReservation() {
+    //given
+    Stream<ReservationEntity> stream = Stream.of(
+        ReservationEntity.builder().description("description").name("test").build(),
+        ReservationEntity.builder().description("description2").name("test2").build()
+    );
+    //when
+    dao.save(stream);
+    //then
+    assertThat(finder.count()).isEqualTo(2);
+  }
+
+  @Test
+  void shouldDeleteById() {
+    ReservationEntity saved = dao.save(ReservationEntity.builder().description("description").name("test").build());
+
+    dao.delete(saved);
+
+    assertThat(finder.count()).isEqualTo(0);
+  }
+
+  @Test
+  void shouldDeleteAllReservation() {
+    //given
+    dao.save(Stream.of(
+        ReservationEntity.builder().description("description").name("test").build(),
+        ReservationEntity.builder().description("description2").name("test2").build()
+    ));
+    //when
+    dao.deleteAll();
+    //then
+    assertThat(finder.count()).isEqualTo(0);
+  }
+
+  @Test
+  void shouldUpdateReservation() {
+    //given
+    ReservationEntity saved = dao.save(ReservationEntity.builder().description("description").name("test").build());
+    saved.setDescription("nowyOpis");
+    //when
+    dao.update(saved);
+    //then
+    Optional<ReservationDTO> optional = finder.getById(saved.getId());
+    assertThat(optional).isPresent();
+    assertThat(optional.get().getDescription()).isNotNull().isEqualTo("nowyOpis");
+  }
+
 
 }

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.runner.JUnitPlatform;
@@ -48,5 +49,53 @@ public class CustomerDaoTest {
         () -> assertThat(customerDTO.isPresent()).isTrue(),
         () -> assertThat(customerDTO.get().getProducts()).isNotEmpty().hasSize(2)
     );
+  }
+
+  @Test
+  void shouldSaveStreamOfCustomers() {
+    //given
+    Stream<CustomerEntity> stream = Stream.of(
+        CustomerEntity.builder().email("test").build(),
+        CustomerEntity.builder().email("test2").build()
+    );
+    //when
+    dao.save(stream);
+    //then
+    assertThat(finder.count()).isEqualTo(2);
+  }
+
+  @Test
+  void shouldDeleteById() {
+    CustomerEntity saved = dao.save(CustomerEntity.builder().email("test").build());
+
+    dao.delete(saved);
+
+    assertThat(finder.count()).isEqualTo(0);
+  }
+
+  @Test
+  void shouldDeleteAllCustomers() {
+    //given
+    dao.save(Stream.of(
+        CustomerEntity.builder().email("test").build(),
+        CustomerEntity.builder().email("test2").build()
+    ));
+    //when
+    dao.deleteAll();
+    //then
+    assertThat(finder.count()).isEqualTo(0);
+  }
+
+  @Test
+  void shouldUpdateCustomer() {
+    //given
+    CustomerEntity saved = dao.save(CustomerEntity.builder().email("test").build());
+    saved.setEmail("nowyOpis");
+    //when
+    dao.update(saved);
+    //then
+    Optional<CustomerDTO> optional = finder.getById(saved.getId());
+    assertThat(optional).isPresent();
+    assertThat(optional.get().getEmail()).isNotNull().isEqualTo("nowyOpis");
   }
 }
