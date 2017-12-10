@@ -7,10 +7,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.michal.olszewski.jooqsample.db.tables.records.ReservationRecord;
 import pl.michal.olszewski.jooqsample.dto.ReservationDTO;
 
 @Repository
+@Transactional(readOnly = true)
 public class ReservationFinder implements Finder<ReservationDTO, Long> {
 
   private final DSLContext dslContext;
